@@ -6,6 +6,7 @@ import os
 
 from server.views.lesson_view import lesson_view
 from server.views.lesson_plan.lesson_plan_view import lesson_plan_view
+from server.views.lesson_plan.module_view import module_view
 
 # Load environment variables from .env file
 load_dotenv()
@@ -19,6 +20,7 @@ db = SQLAlchemy(app)
 
 app.register_blueprint(lesson_view, url_prefix='/api')
 app.register_blueprint(lesson_plan_view, url_prefix='/api/lesson_plan')
+app.register_blueprint(module_view, url_prefix='/api/module')
 
 if __name__ == '__main__':
     app.run(debug=True)
