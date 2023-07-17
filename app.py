@@ -5,8 +5,6 @@ from dotenv import load_dotenv
 import os
 
 from server.views.lesson_view import lesson_view
-from server.views.lesson_plan.lesson_plan_view import lesson_plan_view
-from server.views.lesson_plan.module_view import module_view
 
 # Load environment variables from .env file
 load_dotenv()
