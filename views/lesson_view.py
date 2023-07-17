@@ -3,13 +3,21 @@ from server.controllers.lesson_controller import create_lesson
 
 lesson_view = Blueprint('lesson_view', __name__)
 
-@lesson_view.route('/lessons', methods=['POST'])
+@lesson_view.route('/generate-lesson', methods=['POST'])
 def add_lesson():
-    title = request.json.get('title')
-    description = request.json.get('description')
+    grade = request.json.get('grade')
+    lesson_title = request.json.get('lessonTitle')
+    learning_objective = request.json.get('learningObjective')
 
-    if not title or not description:
-        return jsonify({"error": "Title and description are required"}), 400
+    if not grade or not lesson_title or not learning_objective:
+        return jsonify({"error": "Grade, lesson title, and learning objective are required"}), 400
 
-    lesson = create_lesson(title, description)
-    return jsonify({"id": lesson.id, "title": lesson.title, "description": lesson.description}), 201
+    lesson = create_lesson(grade, lesson_title, learning_objective)
+    
+    return jsonify({
+        "id": lesson.id, 
+        "grade": lesson.grade, 
+        "lesson_title": lesson.lesson_title,
+        "learning_objective": lesson.learning_objective,
+        "lesson_plan": lesson.lesson_plan,  # Assuming create_lesson generates a lesson plan
+    }), 201

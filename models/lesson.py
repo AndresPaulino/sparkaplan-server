@@ -1,10 +1,9 @@
-# models/lesson.py
-from server import db
+from flask_login import UserMixin
 
 class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=False)
+    title = db.Column(db.String(64))
+    content = db.Column(db.String(512))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __repr__(self):
-        return f'<Lesson {self.title}>'
+    user = db.relationship('User', backref='lessons')
