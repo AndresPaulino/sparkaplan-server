@@ -10,4 +10,4 @@ class Lesson(db.Model):
     learning_objective = db.Column(db.String(500), nullable=False)
     content = db.Column(db.Text, nullable=False)  # Storing the OpenAI generated content
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Assuming you have a User model with 'id' as primary key
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # It establishes a foreign key relationship with User model
