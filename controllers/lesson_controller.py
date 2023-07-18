@@ -7,7 +7,38 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def create_lesson(grade, lesson_title, learning_objective, user_id):
     # Build prompt based on input
-    prompt = f"Grade: {grade}\nLesson Title: {lesson_title}\nLearning Objective: {learning_objective}\nGenerate a lesson plan:"
+    prompt = f"""
+Act as a professional teacher with years of experience in education. Create a detailed lesson plan for students in Grade: {grade}. The lesson's title will be "{lesson_title}", and our primary learning objective is: "{learning_objective}".
+
+Please generate your response strictly in json format. You can use the following json as a template:
+
+{
+  "title": "The title of the lesson",
+  "date": "The date when the lesson will be conducted",
+  "duration": "Estimated time duration of the entire lesson",
+  "objective": "The primary learning objective of the lesson",
+  "materials": [
+    "List of materials needed for the lesson"
+  ],
+  "sections": [
+    {
+      "title": "Title for this section of the lesson",
+      "duration": "Estimated duration for this section",
+      "description": "A short description of what this section entails",
+      "instructions": "Detailed instructions on how to conduct this section of the lesson"
+    },
+    ".... Continue with all necessary sections"
+  ],
+  "assessment": "How will the understanding of the students be assessed after this lesson",
+  "conclusion": "A closing note for the lesson"
+}
+
+The lesson plan should be easy to follow and understand. It should be detailed enough for a substitute teacher to be able to conduct the lesson without any issues. The lesson plan should be written in a way that is easy to understand for students in Grade: {grade}.
+
+Only respond with the json object, nothing else. Do not include this prompt in your response. Do not explain anything, just generate the lesson plan. The lesson plan should be at least 500 words long.
+
+"""
+
 
     # Call OpenAI API to generate lesson content
     try:
