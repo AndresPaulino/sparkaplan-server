@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from server.controllers.lesson_controller import create_lesson
+from controllers.lesson_controller import create_lesson
 
 lesson_view = Blueprint('lesson_view', __name__)
 
@@ -8,11 +8,12 @@ def generate_lesson():
     grade = request.json.get('grade')
     lesson_title = request.json.get('lessonTitle')
     learning_objective = request.json.get('learningObjective')
+    user_id = request.json.get('userId')
 
-    if not grade or not lesson_title or not learning_objective:
+    if not grade or not lesson_title or not learning_objective or not user_id:
         return jsonify({"error": "Grade, lesson title, and learning objective are required"}), 400
 
-    lesson = create_lesson(grade, lesson_title, learning_objective)
+    lesson = create_lesson(grade, lesson_title, learning_objective, user_id)
 
     if lesson is None:
         return jsonify({"error": "Could not create lesson"}), 500

@@ -1,11 +1,11 @@
-from server.models.lesson import Lesson
-from server import db
+from models.lesson import Lesson
+from db import db
 import openai
 import os
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-def create_lesson(grade, lesson_title, learning_objective):
+def create_lesson(grade, lesson_title, learning_objective, user_id):
     # Build prompt based on input
     prompt = f"Grade: {grade}\nLesson Title: {lesson_title}\nLearning Objective: {learning_objective}\nGenerate a lesson plan:"
 
@@ -24,7 +24,7 @@ def create_lesson(grade, lesson_title, learning_objective):
         return None
 
     # Create new lesson object
-    lesson = Lesson(grade=grade, lesson_title=lesson_title, learning_objective=learning_objective, content=lesson_content)
+    lesson = Lesson(grade=grade, lesson_title=lesson_title, learning_objective=learning_objective, content=lesson_content, user_id=user_id)
 
     # Add new lesson to database
     db.session.add(lesson)
