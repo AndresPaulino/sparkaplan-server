@@ -33,8 +33,13 @@ def get_lesson(id):
     if not id:
         return jsonify({"error": "Lesson ID is required"}), 400
 
-    lesson = LessonController.get_by_id(id)
-    if lesson is None:
-        return jsonify({"error": "Could not find lesson"}), 404
+    try:
+        lesson = LessonController.get_by_id(id)
+        if lesson is None:
+            return jsonify({"error": "Could not find lesson"}), 404
 
-    return jsonify(lesson), 200
+        return jsonify(lesson), 200
+    except Exception as e:
+        print(f"Error getting lesson: {e}")
+        return jsonify({"error": "Could not get lesson"}), 500
+    
