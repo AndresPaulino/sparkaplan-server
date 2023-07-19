@@ -1,6 +1,7 @@
 from flask import Blueprint, request,jsonify
-from controllers.lesson_controller import create_lesson
+from controllers.lesson_controller import LessonController, create_lesson
 from models.lesson import Lesson
+
 
 lesson_view = Blueprint('lesson_view', __name__)
 
@@ -12,7 +13,7 @@ def generate_lesson():
     user_id = request.json.get('user_id')
 
     if not grade or not lesson_title or not learning_objective or not user_id:
-        return jsonify({"error": "Grade, lesson title, and learning objective are required"}), 400
+        return jsonify({"error": "Grade, lesson title, learning objective, and user ID are required"}), 400
 
     lesson = create_lesson(grade, lesson_title, learning_objective, user_id)
 
@@ -27,22 +28,13 @@ def generate_lesson():
         "content": lesson.content
     }), 201
 
-@lesson_view.route('/get-lesson', methods=['GET'])
-def get_lesson():
-    lesson_id = request.args.get('id')
-
-    if not lesson_id:
+@lesson_view.route('/get-lesson/<id>', methods=['GET'])
+def get_lesson(id):
+    if not id:
         return jsonify({"error": "Lesson ID is required"}), 400
 
-    lesson = Lesson.query.filter_by(id=lesson_id).first()
-
+    lesson = LessonController.get_by_id(id)
     if lesson is None:
         return jsonify({"error": "Could not find lesson"}), 404
 
-    return jsonify({
-        "id": lesson.id, 
-        "grade": lesson.grade, 
-        "lesson_title": lesson.lesson_title,
-        "learning_objective": lesson.learning_objective,
-        "content": lesson.content
-    }), 200
+    return jsonify(lesson), 200

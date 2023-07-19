@@ -61,3 +61,32 @@ Only respond with the json object, nothing else. Do not include this prompt in y
     db.session.commit()
 
     return lesson
+  
+  
+class LessonController:
+
+    @staticmethod
+    def get_by_id(id):
+      try:
+        lesson = Lesson.query.filter_by(id=id).first()
+        if lesson is None:
+            return None
+
+        return {
+            "id": lesson.id, 
+            "grade": lesson.grade, 
+            "lesson_title": lesson.lesson_title,
+            "learning_objective": lesson.learning_objective,
+            "content": lesson.content
+        }
+      except Exception as e:
+        print(f"Error getting lesson: {e}")
+        return None
+      
+      
+      
+      
+      
+        
+      
+
