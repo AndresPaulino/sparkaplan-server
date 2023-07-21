@@ -32,9 +32,9 @@ Please generate your response strictly in json format. You can use the following
   "conclusion": "A closing note for the lesson"
 }}
 
-The lesson plan should be easy to follow and understand. It should be detailed enough for a substitute teacher to be able to conduct the lesson without any issues. The lesson plan should be written in a way that is easy to understand for students in Grade: {grade}.
+The lesson plan should be easy to follow and understand. It should be detailed enough for a substitute teacher to be able to conduct the lesson without any issues. Generate at least 3 sections. The lesson plan should be written in a way that is easy to understand for students in Grade: {grade}.
 
-Only respond with the json object, nothing else. Do not include this prompt in your response. Do not explain anything, just generate the lesson plan. The lesson plan should be at least 500 words long.
+Only respond with the json so that I may easily convert into an object, nothing else. Do not include this prompt in your response. Do not explain anything, just generate the lesson plan. The lesson plan should be at least 500 words long.
 
 """
 
@@ -77,7 +77,8 @@ class LessonController:
             "grade": lesson.grade, 
             "lesson_title": lesson.lesson_title,
             "learning_objective": lesson.learning_objective,
-            "content": lesson.content
+            "content": lesson.content,
+            "date_created": lesson.date_created,
         }
       except Exception as e:
         print(f"Error getting lesson: {e}")

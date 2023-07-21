@@ -1,11 +1,11 @@
 from flask import Blueprint, request,jsonify
+from flask_cors import cross_origin
 from controllers.lesson_controller import LessonController, create_lesson
-from models.lesson import Lesson
-
 
 lesson_view = Blueprint('lesson_view', __name__)
 
 @lesson_view.route('/generate-lesson', methods=['POST'])
+@cross_origin()
 def generate_lesson():
     grade = request.json.get('grade')
     lesson_title = request.json.get('lessonTitle')
@@ -25,10 +25,12 @@ def generate_lesson():
         "grade": lesson.grade, 
         "lesson_title": lesson.lesson_title,
         "learning_objective": lesson.learning_objective,
-        "content": lesson.content
+        "content": lesson.content,
+        "date_created": lesson.date_created,
     }), 201
 
 @lesson_view.route('/get-lesson/<id>', methods=['GET'])
+@cross_origin()
 def get_lesson(id):
     if not id:
         return jsonify({"error": "Lesson ID is required"}), 400
