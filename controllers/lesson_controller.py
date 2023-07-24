@@ -83,7 +83,25 @@ class LessonController:
       except Exception as e:
         print(f"Error getting lesson: {e}")
         return None
-      
+    
+    @staticmethod  
+    def get_all():
+        try:
+            lessons = Lesson.query.all()
+            return [
+                {
+                    "id": lesson.id, 
+                    "grade": lesson.grade, 
+                    "lesson_title": lesson.lesson_title,
+                    "learning_objective": lesson.learning_objective,
+                    "content": lesson.content,
+                    "date_created": lesson.date_created,
+                } 
+                for lesson in lessons
+            ]
+        except Exception as e:
+            print(f"Error getting lessons: {e}")
+            return None
       
       
       
