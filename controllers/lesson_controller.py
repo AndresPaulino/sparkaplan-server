@@ -96,6 +96,7 @@ class LessonController:
                     "learning_objective": lesson.learning_objective,
                     "content": lesson.content,
                     "date_created": lesson.date_created,
+                    "user_id": lesson.user_id
                 } 
                 for lesson in lessons
             ]

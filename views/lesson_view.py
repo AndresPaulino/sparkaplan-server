@@ -45,3 +45,11 @@ def get_lesson(id):
         print(f"Error getting lesson: {e}")
         return jsonify({"error": "Could not get lesson"}), 500
     
+
+@lesson_view.route('/get-all-lessons', methods=['GET'])
+def get_all_lessons():
+    lessons = LessonController.get_all()
+    if lessons is None:
+        return jsonify(message='Error getting lessons'), 500
+    return jsonify(lessons=lessons), 200
+    
