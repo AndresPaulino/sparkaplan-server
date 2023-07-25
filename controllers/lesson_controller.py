@@ -103,6 +103,29 @@ class LessonController:
         except Exception as e:
             print(f"Error getting lessons: {e}")
             return None
+          
+    # Delete lesson by id
+    @staticmethod
+    def delete_by_id(id):
+      try:
+        lesson = Lesson.query.filter_by(id=id).first()
+        if lesson is None:
+            return None
+
+        db.session.delete(lesson)
+        db.session.commit()
+
+        return {
+            "id": lesson.id, 
+            "grade": lesson.grade, 
+            "lesson_title": lesson.lesson_title,
+            "learning_objective": lesson.learning_objective,
+            "content": lesson.content,
+            "date_created": lesson.date_created,
+        }
+      except Exception as e:
+        print(f"Error deleting lesson: {e}")
+        return None
       
       
       
