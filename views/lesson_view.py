@@ -37,7 +37,6 @@ def generate_lesson():
 
 # ======== [ Get Lesson ] ======== #
 @lesson_view.route('/get-lesson/<id>', methods=['GET'])
-@cross_origin()
 def get_lesson(id):
     if not id:
         return jsonify({"error": "Lesson ID is required"}), 400

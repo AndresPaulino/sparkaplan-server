@@ -5,20 +5,27 @@ from db import db
 import os
 from dotenv import load_dotenv
 from views.lesson_view import lesson_view
+from views.auth_view import auth_view
+from flask_jwt_extended import JWTManager
 
 load_dotenv()
 
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{os.getenv('DB_USERNAME')}:{os.getenv('DB_PASSWORD')}@localhost/{os.getenv('DB_NAME')}"
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+    jwt = JWTManager(app)
     
     db.init_app(app)
     migrate = Migrate(app, db)
     
-    CORS(app, origins=['http://localhost:3031', 'http://127.0.0.1:5000', '*'])
+    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+
 
     # Register blueprint within the create_app function
     app.register_blueprint(lesson_view, url_prefix='/api')
+    app.register_blueprint(auth_view, url_prefix='/api')
+    
     
     return app
 
