@@ -19,8 +19,7 @@ def create_app():
     db.init_app(app)
     migrate = Migrate(app, db)
     
-    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
-
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:3031"}}, supports_credentials=True)
 
     # Register blueprint within the create_app function
     app.register_blueprint(lesson_view, url_prefix='/api')

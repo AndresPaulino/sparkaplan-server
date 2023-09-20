@@ -85,9 +85,9 @@ class LessonController:
         return None
     
     @staticmethod  
-    def get_all():
+    def get_all(user_id):
         try:
-            lessons = Lesson.query.all()
+            lessons = Lesson.query.filter_by(user_id=user_id).all()
             return [
                 {
                     "id": lesson.id, 
@@ -106,26 +106,27 @@ class LessonController:
           
     # Delete lesson by id
     @staticmethod
-    def delete_by_id(id):
-      try:
-        lesson = Lesson.query.filter_by(id=id).first()
-        if lesson is None:
+    def delete_by_id(id, user_id):
+        try:
+            lesson = Lesson.query.filter_by(id=id, user_id=user_id).first()
+            if lesson is None:
+                return None
+
+            db.session.delete(lesson)
+            db.session.commit()
+
+            return {
+                "id": lesson.id, 
+                "grade": lesson.grade, 
+                "lesson_title": lesson.lesson_title,
+                "learning_objective": lesson.learning_objective,
+                "content": lesson.content,
+                "date_created": lesson.date_created,
+            }
+        except Exception as e:
+            print(f"Error deleting lesson: {e}")
             return None
 
-        db.session.delete(lesson)
-        db.session.commit()
-
-        return {
-            "id": lesson.id, 
-            "grade": lesson.grade, 
-            "lesson_title": lesson.lesson_title,
-            "learning_objective": lesson.learning_objective,
-            "content": lesson.content,
-            "date_created": lesson.date_created,
-        }
-      except Exception as e:
-        print(f"Error deleting lesson: {e}")
-        return None
       
       
       
