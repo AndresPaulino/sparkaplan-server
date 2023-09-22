@@ -12,7 +12,7 @@ def login():
     
     if user and user.check_password(data['password']):
         access_token = create_access_token(identity=user.id)
-        return jsonify(accessToken=access_token, user={"id": user.id, "email": user.email})
+        return jsonify(accessToken=access_token, user={"id": user.id, "email": user.email, "firstName": user.first_name, "lastName": user.last_name, "displayName": user.first_name + " " + user.last_name})
     
     return jsonify(message="Invalid email or password"), 401
 
