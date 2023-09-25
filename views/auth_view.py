@@ -39,4 +39,4 @@ def get_account():
     user = User.query.get(user_id)
     if not user:
         return jsonify(message="User not found"), 404
-    return jsonify(user={"id": user.id, "email": user.email})
+    return jsonify(user={"id": user.id, "email": user.email, "firstName": user.first_name, "lastName": user.last_name, "displayName": user.display_name, "county": user.county, "state": user.state})
