@@ -9,6 +9,9 @@ class User(db.Model):
     password = db.Column(db.String(120), nullable=False)
     first_name = db.Column(db.String(120))
     last_name = db.Column(db.String(120))
+    state = db.Column(db.String(120))
+    county = db.Column(db.String(120))
+    display_name = db.Column(db.String(240))  # firstname + lastname
 
     @classmethod
     def find_by_email(cls, email):
@@ -24,3 +27,8 @@ class User(db.Model):
     @staticmethod
     def hash_password(password):
         return generate_password_hash(password)
+    
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+        db.session.commit()

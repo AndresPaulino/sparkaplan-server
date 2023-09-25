@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 from views.lesson_view import lesson_view
 from views.auth_view import auth_view
+from views.user_view import user_view
 from flask_jwt_extended import JWTManager
 
 load_dotenv()
@@ -24,6 +25,7 @@ def create_app():
     # Register blueprint within the create_app function
     app.register_blueprint(lesson_view, url_prefix='/api')
     app.register_blueprint(auth_view, url_prefix='/api')
+    app.register_blueprint(user_view, url_prefix='/api')
     
     
     return app
