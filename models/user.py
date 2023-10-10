@@ -32,14 +32,3 @@ class User(db.Model):
         for key, value in kwargs.items():
             setattr(self, key, value)
         db.session.commit()
-        
-    google_id = db.Column(db.String, unique=True, nullable=True)
-
-    @classmethod
-    def find_or_create_by_google(cls, google_id, email, first_name, last_name):
-        user = cls.query.filter_by(google_id=google_id).first()
-        if not user:
-            user = cls(email=email, google_id=google_id, first_name=first_name, last_name=last_name)
-            db.session.add(user)
-            db.session.commit()
-        return user
