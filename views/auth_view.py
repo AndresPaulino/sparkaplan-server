@@ -31,7 +31,7 @@ def register():
     )
     user.save_to_db()
     access_token = create_access_token(identity=user.id)
-    return jsonify(accessToken=access_token, user={"id": user.id, "email": user.email})
+    return jsonify(accessToken=access_token, user={"id": user.id, "email": user.email, "displayName": user.display_name})
 
 @auth_view.route('/account/my-account', methods=['GET'])
 @jwt_required()
