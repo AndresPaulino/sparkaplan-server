@@ -26,8 +26,8 @@ def register():
         email=data['email'],
         password=User.hash_password(data['password']),
         first_name=data['firstName'],
-        last_name=data['lastName']
-        display_name=data['firstName'] + " " + data['lastName'],
+        last_name=data['lastName'],
+        display_name=data['firstName'] + " " + data['lastName']
     )
     user.save_to_db()
     access_token = create_access_token(identity=user.id)
