@@ -27,10 +27,10 @@ def create_app():
     app.register_blueprint(auth_view, url_prefix='/api')
     app.register_blueprint(user_view, url_prefix='/api')
     
-        
-        return app
+    
+    return app
 
-    app = create_app()
+app = create_app()
 
 if __name__ == "__main__":
     with app.app_context():
